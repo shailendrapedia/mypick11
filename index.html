@@ -25,28 +25,16 @@
         .translator { text-align: right; margin-bottom: 20px; }
         select { padding: 8px; border-radius: 5px; border: none; background: #ffcc00; font-weight: bold; }
     </style>
-    <script>
-        function translatePage() {
-            var language = document.getElementById("languageSelect").value;
-            var googleTranslateURL = "https://translate.google.com/translate?sl=auto&tl=" + language + "&u=" + window.location.href;
-            window.open(googleTranslateURL, "_blank");
-        }
-    </script>
 </head>
 <body>
 
 <div class="container">
 
+    <!-- Language Translation Button (Only Hindi) -->
     <div class="translator">
-        <label for="languageSelect">🌍 Change Language:</label>
-        <select id="languageSelect" onchange="translatePage()">
-            <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="ar">العربية</option>
-        </select>
+        <button onclick="window.location.href='https://translate.google.com/translate?sl=auto&tl=hi&u=' + window.location.href" style="padding: 10px; background-color: #ffcc00; color: black; font-size: 16px; border-radius: 5px; cursor: pointer;">
+            🌍 Translate to Hindi
+        </button>
     </div>
 
     <h1>🏏 Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium</h1>
