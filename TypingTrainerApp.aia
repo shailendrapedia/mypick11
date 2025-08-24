@@ -1,0 +1,242 @@
+{
+  "authURL": ["https://REPLACE_WITH_YOUR_DOMAIN.github.io"],
+  "YaVersion": "208",
+  "Source": "Form",
+  "Properties": {
+    "$Name": "TypingTrainerApp",
+    "$Type": "Form",
+    "$Version": "28",
+    "BackgroundColor": "&HFF0F172A",
+    "Title": "Typing Trainer - Like keybr.com",
+    "TitleVisible": true,
+    "Uuid": "0",
+    "$Components": [
+      {
+        "$Name": "MainContainer",
+        "$Type": "VerticalArrangement",
+        "$Version": "4",
+        "AlignHorizontal": "3",
+        "BackgroundColor": "&HFF1E293B",
+        "Width": "-2",
+        "Uuid": "1",
+        "$Components": [
+          {
+            "$Name": "TitleLabel",
+            "$Type": "Label",
+            "$Version": "5",
+            "Text": "⌨️ Typing Trainer",
+            "TextSize": "24",
+            "TextColor": "&HFFFFD700",
+            "Uuid": "2"
+          },
+          {
+            "$Name": "StatsContainer",
+            "$Type": "HorizontalArrangement",
+            "$Version": "4",
+            "Width": "-2",
+            "Uuid": "3",
+            "$Components": [
+              {
+                "$Name": "WPMContainer",
+                "$Type": "VerticalArrangement",
+                "$Version": "4",
+                "Width": "-1070",
+                "BackgroundColor": "&HFF243447",
+                "Uuid": "4",
+                "$Components": [
+                  {
+                    "$Name": "WPMValue",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "0",
+                    "TextSize": "20",
+                    "TextColor": "&HFFFFCC00",
+                    "Uuid": "5"
+                  },
+                  {
+                    "$Name": "WPMLabel",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "WPM",
+                    "TextSize": "12",
+                    "TextColor": "&HFFFFFFFF",
+                    "Uuid": "6"
+                  }
+                ]
+              },
+              {
+                "$Name": "AccuracyContainer",
+                "$Type": "VerticalArrangement",
+                "$Version": "4",
+                "Width": "-1070",
+                "BackgroundColor": "&HFF243447",
+                "Uuid": "7",
+                "$Components": [
+                  {
+                    "$Name": "AccuracyValue",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "100%",
+                    "TextSize": "20",
+                    "TextColor": "&HFFFFCC00",
+                    "Uuid": "8"
+                  },
+                  {
+                    "$Name": "AccuracyLabel",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "Accuracy",
+                    "TextSize": "12",
+                    "TextColor": "&HFFFFFFFF",
+                    "Uuid": "9"
+                  }
+                ]
+              },
+              {
+                "$Name": "TimeContainer",
+                "$Type": "VerticalArrangement",
+                "$Version": "4",
+                "Width": "-1070",
+                "BackgroundColor": "&HFF243447",
+                "Uuid": "10",
+                "$Components": [
+                  {
+                    "$Name": "TimeValue",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "0s",
+                    "TextSize": "20",
+                    "TextColor": "&HFFFFCC00",
+                    "Uuid": "11"
+                  },
+                  {
+                    "$Name": "TimeLabel",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "Time",
+                    "TextSize": "12",
+                    "TextColor": "&HFFFFFFFF",
+                    "Uuid": "12"
+                  }
+                ]
+              },
+              {
+                "$Name": "ErrorsContainer",
+                "$Type": "VerticalArrangement",
+                "$Version": "4",
+                "Width": "-1070",
+                "BackgroundColor": "&HFF243447",
+                "Uuid": "13",
+                "$Components": [
+                  {
+                    "$Name": "ErrorsValue",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "0",
+                    "TextSize": "20",
+                    "TextColor": "&HFFFFCC00",
+                    "Uuid": "14"
+                  },
+                  {
+                    "$Name": "ErrorsLabel",
+                    "$Type": "Label",
+                    "$Version": "5",
+                    "Text": "Errors",
+                    "TextSize": "12",
+                    "TextColor": "&HFFFFFFFF",
+                    "Uuid": "15"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$Name": "TextDisplayArea",
+            "$Type": "VerticalArrangement",
+            "$Version": "4",
+            "Width": "-2",
+            "BackgroundColor": "&HFF0F172A",
+            "Uuid": "16",
+            "$Components": [
+              {
+                "$Name": "TextToType",
+                "$Type": "Label",
+                "$Version": "5",
+                "Text": "Start typing to see the text appear here...",
+                "TextSize": "16",
+                "TextColor": "&HFFFFFFFF",
+                "FontTypeface": "3",
+                "Width": "-2",
+                "Uuid": "17"
+              },
+              {
+                "$Name": "TypingInput",
+                "$Type": "TextBox",
+                "$Version": "6",
+                "BackgroundColor": "&HFF243447",
+                "TextColor": "&HFFFFFFFF",
+                "Hint": "Start typing here...",
+                "FontTypeface": "3",
+                "Width": "-2",
+                "Uuid": "18"
+              }
+            ]
+          },
+          {
+            "$Name": "ControlButtons",
+            "$Type": "HorizontalArrangement",
+            "$Version": "4",
+            "AlignHorizontal": "3",
+            "Width": "-2",
+            "Uuid": "19",
+            "$Components": [
+              {
+                "$Name": "NewTestButton",
+                "$Type": "Button",
+                "$Version": "7",
+                "BackgroundColor": "&HFFFFCC00",
+                "Text": "New Test",
+                "TextColor": "&HFF000000",
+                "Uuid": "20"
+              },
+              {
+                "$Name": "ResetButton",
+                "$Type": "Button",
+                "$Version": "7",
+                "BackgroundColor": "&HFFFFCC00",
+                "Text": "Reset",
+                "TextColor": "&HFF000000",
+                "Uuid": "21"
+              },
+              {
+                "$Name": "PauseButton",
+                "$Type": "Button",
+                "$Version": "7",
+                "BackgroundColor": "&HFFFFCC00",
+                "Text": "Pause",
+                "TextColor": "&HFF000000",
+                "Uuid": "22"
+              }
+            ]
+          },
+          {
+            "$Name": "InstructionLabel",
+            "$Type": "Label",
+            "$Version": "5",
+            "Text": "💡 Typing trainer inspired by keybr.com",
+            "TextSize": "14",
+            "TextColor": "&HFFFFCC00",
+            "Uuid": "23"
+          }
+        ]
+      },
+      {
+        "$Name": "Clock1",
+        "$Type": "Clock",
+        "$Version": "4",
+        "TimerInterval": "100",
+        "Uuid": "24"
+      }
+    ]
+  }
+}
