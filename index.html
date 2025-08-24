@@ -24,6 +24,25 @@
         .download-btn img { width: 150px; vertical-align: middle; }
         .translator { text-align: right; margin-bottom: 20px; }
         select { padding: 8px; border-radius: 5px; border: none; background: #ffcc00; font-weight: bold; }
+        
+        /* Typing Trainer Styles */
+        .typing-section { margin: 40px 0; padding: 30px; background: #1e3a8a; border-radius: 10px; border: 2px solid #ffcc00; }
+        .typing-area { background: #0f172a; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #444; }
+        .text-to-type { font-size: 18px; line-height: 1.8; letter-spacing: 1px; margin-bottom: 20px; font-family: 'Courier New', monospace; }
+        .text-to-type .correct { background: #22c55e; color: white; }
+        .text-to-type .incorrect { background: #ef4444; color: white; }
+        .text-to-type .current { background: #ffcc00; color: black; animation: blink 1s infinite; }
+        .typing-input { width: 100%; padding: 15px; font-size: 16px; border: 2px solid #ffcc00; border-radius: 5px; background: #243447; color: white; font-family: 'Courier New', monospace; }
+        .typing-input:focus { outline: none; border-color: #ffd700; }
+        .stats-panel { display: flex; justify-content: space-around; margin: 20px 0; }
+        .stat-box { text-align: center; padding: 15px; background: #243447; border-radius: 8px; border: 1px solid #ffcc00; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #ffcc00; }
+        .stat-label { font-size: 14px; color: #fff; }
+        .typing-controls { text-align: center; margin: 20px 0; }
+        .control-btn { padding: 10px 20px; margin: 0 10px; background: #ffcc00; color: black; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .control-btn:hover { background: #ffd700; }
+        .control-btn:disabled { background: #666; color: #999; cursor: not-allowed; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0.3; } }
     </style>
 </head>
 <body>
@@ -38,6 +57,46 @@
     </div>
 
     <h1>🏏 Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium</h1>
+
+    <!-- Typing Trainer Section -->
+    <div class="typing-section">
+        <h2>⌨️ Typing Trainer - Practice Like keybr.com</h2>
+        <p style="text-align: center;">Improve your typing speed and accuracy with this interactive typing trainer!</p>
+        
+        <div class="stats-panel">
+            <div class="stat-box">
+                <div class="stat-value" id="wpmDisplay">0</div>
+                <div class="stat-label">WPM</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="accuracyDisplay">100%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="timeDisplay">0s</div>
+                <div class="stat-label">Time</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="errorDisplay">0</div>
+                <div class="stat-label">Errors</div>
+            </div>
+        </div>
+
+        <div class="typing-area">
+            <div class="text-to-type" id="textToType"></div>
+            <input type="text" class="typing-input" id="typingInput" placeholder="Start typing here..." autocomplete="off" spellcheck="false">
+        </div>
+
+        <div class="typing-controls">
+            <button class="control-btn" onclick="startNewTest()">New Test</button>
+            <button class="control-btn" onclick="resetTest()">Reset</button>
+            <button class="control-btn" onclick="togglePause()" id="pauseBtn">Pause</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 14px; color: #ffcc00;">
+            💡 <strong>For MIT App Inventor/Kodular:</strong> Use this web component as reference for building your typing app extension!
+        </div>
+    </div>
 
     <h2>🏟️ Playing Conditions for T20s</h2>
     <p>The Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium is a great venue for T20 cricket, offering excellent playing conditions and facilities. It provides a wonderful experience for players and fans alike.</p>
@@ -160,6 +219,189 @@
         </a>
     </div>
 </div>
+
+<script>
+// Typing Trainer JavaScript - Similar to keybr.com functionality
+class TypingTrainer {
+    constructor() {
+        this.texts = [
+            "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet and is perfect for typing practice.",
+            "Programming is the art of telling another human being what one wants the computer to do. It requires patience, logic, and creativity.",
+            "Cricket is a sport that teaches us about teamwork, strategy, and perseverance. Every match tells a unique story of triumph and defeat.",
+            "Technology has revolutionized the way we communicate, learn, and work. It connects people across the globe in ways never imagined before.",
+            "Learning to type efficiently is an essential skill in today's digital world. Practice makes perfect, and consistency is the key to improvement."
+        ];
+        
+        this.currentText = '';
+        this.currentIndex = 0;
+        this.startTime = null;
+        this.errors = 0;
+        this.isStarted = false;
+        this.isPaused = false;
+        this.timer = null;
+        
+        this.textElement = document.getElementById('textToType');
+        this.inputElement = document.getElementById('typingInput');
+        this.wpmElement = document.getElementById('wpmDisplay');
+        this.accuracyElement = document.getElementById('accuracyDisplay');
+        this.timeElement = document.getElementById('timeDisplay');
+        this.errorElement = document.getElementById('errorDisplay');
+        
+        this.init();
+    }
+    
+    init() {
+        this.loadNewText();
+        this.inputElement.addEventListener('input', (e) => this.handleInput(e));
+        this.inputElement.addEventListener('keydown', (e) => this.handleKeyDown(e));
+    }
+    
+    loadNewText() {
+        this.currentText = this.texts[Math.floor(Math.random() * this.texts.length)];
+        this.currentIndex = 0;
+        this.errors = 0;
+        this.isStarted = false;
+        this.isPaused = false;
+        this.startTime = null;
+        
+        this.inputElement.value = '';
+        this.inputElement.disabled = false;
+        this.updateDisplay();
+        this.updateStats();
+    }
+    
+    updateDisplay() {
+        let html = '';
+        for (let i = 0; i < this.currentText.length; i++) {
+            const char = this.currentText[i];
+            if (i < this.currentIndex) {
+                const typedChar = this.inputElement.value[i];
+                if (typedChar === char) {
+                    html += `<span class="correct">${char}</span>`;
+                } else {
+                    html += `<span class="incorrect">${char}</span>`;
+                }
+            } else if (i === this.currentIndex) {
+                html += `<span class="current">${char}</span>`;
+            } else {
+                html += char;
+            }
+        }
+        this.textElement.innerHTML = html;
+    }
+    
+    handleInput(e) {
+        if (!this.isStarted) {
+            this.startTest();
+        }
+        
+        if (this.isPaused) return;
+        
+        const typedText = e.target.value;
+        this.currentIndex = typedText.length;
+        
+        // Check for errors
+        let currentErrors = 0;
+        for (let i = 0; i < typedText.length; i++) {
+            if (typedText[i] !== this.currentText[i]) {
+                currentErrors++;
+            }
+        }
+        this.errors = currentErrors;
+        
+        this.updateDisplay();
+        this.updateStats();
+        
+        // Check if completed
+        if (typedText === this.currentText) {
+            this.completeTest();
+        }
+    }
+    
+    handleKeyDown(e) {
+        // Prevent backspace beyond the current position
+        if (e.key === 'Backspace' && this.inputElement.selectionStart <= 0) {
+            e.preventDefault();
+        }
+    }
+    
+    startTest() {
+        this.isStarted = true;
+        this.startTime = new Date();
+        this.timer = setInterval(() => this.updateStats(), 100);
+    }
+    
+    updateStats() {
+        if (!this.isStarted || this.isPaused) return;
+        
+        const now = new Date();
+        const timeElapsed = this.startTime ? (now - this.startTime) / 1000 : 0;
+        const wordsTyped = this.inputElement.value.length / 5; // Standard: 5 characters = 1 word
+        const wpm = timeElapsed > 0 ? Math.round((wordsTyped / timeElapsed) * 60) : 0;
+        const accuracy = this.inputElement.value.length > 0 ? 
+            Math.round(((this.inputElement.value.length - this.errors) / this.inputElement.value.length) * 100) : 100;
+        
+        this.wpmElement.textContent = wpm;
+        this.accuracyElement.textContent = accuracy + '%';
+        this.timeElement.textContent = Math.round(timeElapsed) + 's';
+        this.errorElement.textContent = this.errors;
+    }
+    
+    completeTest() {
+        clearInterval(this.timer);
+        this.inputElement.disabled = true;
+        
+        // Show completion message
+        setTimeout(() => {
+            alert(`🎉 Test completed!\nWPM: ${this.wpmElement.textContent}\nAccuracy: ${this.accuracyElement.textContent}\nTime: ${this.timeElement.textContent}`);
+        }, 500);
+    }
+    
+    reset() {
+        clearInterval(this.timer);
+        this.loadNewText();
+        document.getElementById('pauseBtn').textContent = 'Pause';
+    }
+    
+    togglePause() {
+        if (!this.isStarted) return;
+        
+        this.isPaused = !this.isPaused;
+        const pauseBtn = document.getElementById('pauseBtn');
+        
+        if (this.isPaused) {
+            clearInterval(this.timer);
+            this.inputElement.disabled = true;
+            pauseBtn.textContent = 'Resume';
+        } else {
+            this.timer = setInterval(() => this.updateStats(), 100);
+            this.inputElement.disabled = false;
+            this.inputElement.focus();
+            pauseBtn.textContent = 'Pause';
+        }
+    }
+}
+
+// Global functions for buttons
+let typingTrainer;
+
+function startNewTest() {
+    typingTrainer.reset();
+}
+
+function resetTest() {
+    typingTrainer.reset();
+}
+
+function togglePause() {
+    typingTrainer.togglePause();
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    typingTrainer = new TypingTrainer();
+});
+</script>
 
 </body>
 </html>
